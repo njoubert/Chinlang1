@@ -1,0 +1,256 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+   "http://www.w3.org/TR/html4/loose.dtd">
+
+<html lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<title>NPCR Flashcards</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" /> 
+	<meta name="apple-mobile-web-app-capable" content="yes" /> 
+	<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+	<meta name="author" content="Niels Joubert">
+	<link rel="stylesheet" type="text/css" href="reset.css">
+	<!-- Date: 2011-10-19 -->
+	
+<script type="text/javascript" src="jquery-1.6.4.min.js"></script>
+<script type="text/javascript" src="characters.js"></script> 
+<script type="text/javascript">
+
+var use_lessons = all_lessons
+
+function get_random_character(lesson_array) {
+  var selected_lesson_nr = Math.floor(Math.random()*(lesson_array.length));
+  var char_array = characters[lesson_array[selected_lesson_nr]];
+  var selected_char_nr = Math.floor(Math.random()*(char_array.length));
+  return {
+    'lesson_idx': selected_lesson_nr, 
+    'character_idx': selected_char_nr
+    };
+
+}
+function get_next_character(lesson_array) {
+  new_idx = current_idx;
+  if (current_idx.lesson_idx+1 == use_lessons.length && current_idx.character_idx+1 == characters[use_lessons[current_idx.lesson_idx]].length) {
+    new_idx.lesson_idx = 0;
+    new_idx.character_idx = 0;
+  } else if (current_idx.character_idx+1 == characters[use_lessons[current_idx.lesson_idx]].length) {
+    new_idx.character_idx = 0;
+    new_idx.lesson_idx += 1;
+  } else {
+    new_idx.character_idx += 1;
+  }
+  return new_idx;
+}
+
+function reset() {
+  current_idx = {'lesson_idx': 0, 'character_idx': -1};
+  current_character = "";
+}
+
+var current_idx = {'lesson_idx': 0, 'character_idx': -1};
+var current_character = "";
+var always_show_answer = false;
+var random_order = true;
+
+var showing_char = false;
+var showing_pinyin = false;
+
+function choose_random_character() {
+  var character = current_character
+  while (character[0] == current_character[0]) {
+    if (random_order) {
+      idx = get_random_character(use_lessons);
+    } else {
+      idx = get_next_character(use_lessons);
+    }
+    if (characters[use_lessons[idx.lesson_idx]][idx.character_idx][0] != current_character[0]) {
+      current_idx = idx;
+      current_character = characters[use_lessons[idx.lesson_idx]][idx.character_idx];
+      break;
+    }
+  }
+  $('#lesson').html(use_lessons[current_idx.lesson_idx] + ":" + (current_idx.character_idx+1));
+}
+
+function toggle_character_visibility(state) {
+  if (state) {
+    $('#character_container').html(current_character[1]);
+    showing_char = true;
+  } else {
+    $('#character_container').html("");
+    showing_char = false;
+  }
+  
+}
+function toggle_pinyin_visibility(state) {
+  if (state) {
+    $('#pinyin').html(current_character[0]);
+    $('#defin').html(current_character[3]);
+    showing_pinyin = true;
+  } else {
+    $('#pinyin').html("");
+    $('#defin').html("");
+    showing_pinyin = false;
+  }
+}
+
+function remove_lesson(lesson) {
+  new_lessons = []
+  for (i = 0; i < use_lessons.length; i++) {
+    if (use_lessons[i] != lesson)
+      new_lessons.push(use_lessons[i]);
+  }
+  use_lessons = new_lessons;
+  reset();
+}
+
+function add_lesson(lesson) {
+  use_lessons.push(lesson);
+  reset();
+}
+
+$(document).ready(function() {
+  window.scrollTo(0,1);
+  
+  $("#character_container").click(function() {
+    if (showing_pinyin && !showing_char) {
+      toggle_character_visibility(true);      
+    } else {
+      choose_random_character();
+      toggle_character_visibility(true);
+      toggle_pinyin_visibility(always_show_answer);
+    }
+  })
+  $("#pinyin_container").click(function() {
+    if (showing_char && !showing_pinyin) {
+      toggle_pinyin_visibility(true);      
+    } else {
+      choose_random_character();
+      toggle_pinyin_visibility(true);
+      toggle_character_visibility(always_show_answer);
+    }
+  })
+  
+  $("#immediate_answer").click(function() {
+    if ($("#immediate_answer").is(":checked")) {
+      always_show_answer = true;
+    } else {
+      always_show_answer = false;
+    }
+  })
+
+  $("#random_order").click(function() {
+    if ($("#random_order").is(":checked")) {
+      random_order = true;
+    } else {
+      random_order = false;
+    }
+  })  
+  
+
+});
+
+
+</script>
+
+
+<style>
+html, body, #container {
+  width: 100%;
+  height: 100%;
+  margin: 0px;
+  font-family: 隶书, 黑体, Arial, Verdana, sans-serif;
+}
+#container {
+    position:relative;
+    width: 300px;
+    margin: 0 auto;
+}
+#character_container {
+  line-height: 100%;
+  font-size: 65pt;
+  margin-top: 10px;
+  padding-top: 12pt;
+  text-align: center;
+  height: 75pt;
+  background: #ddd;
+}
+#pinyin_container {
+  line-height: 100%;
+  font-size: 36pt;
+  margin-top: 10px;
+  padding-top: 12pt;
+  text-align: center;
+  height: 75pt;
+  background: #ddd;
+}
+#defin {
+  padding-top: 8pt;
+  font-size: 12pt;
+  line-height: normal;
+}
+#pinyin {
+  font-size: 36pt;
+}
+#options {
+  margin-top: 10px;
+}
+#options .lessonbox {
+  margin-left: 5px;
+  margin-right: 2px;
+}
+#lesson {
+  font-size: 6pt;
+  float: right;
+  position: relative;
+  top: -16px;
+  left: -3px;
+}
+</style>
+</head>
+<body>
+<div id="container">
+  <div id="character_container">Click</div>
+  <div id="lesson">-</div>
+  <div id="pinyin_container">
+    <div id="pinyin">Click</div>
+    <div id="defin">for pinyin</div>
+
+  </div>
+
+  <div id="options">
+    <form>
+    <p>
+      <input type="checkbox" class="lessonbox" id="immediate_answer" name="immediate_answer" />Show answer immediately<br />
+      <input type="checkbox" class="lessonbox" id="random_order" name="random_order" checked="true" />Show in random order<br />
+      Show characters from:<br />
+      <script type="text/javascript">
+       for (i=0; i < all_lessons.length; i++) {
+         document.write("<input class=\"lessonbox\" type=\"checkbox\" id=\"check_" + all_lessons[i] + "\" value=\"" + all_lessons[i] + "\" checked=\"true\"/>" + all_lessons[i])
+         $("#check_" + all_lessons[i]).click(function() {
+           if ($(this).is(":checked")) {
+             add_lesson(this.value);
+           } else {
+             remove_lesson(this.value);
+           }
+         });
+       }
+      </script>
+      <p><br/><a href="mailto:njoubert@gmail.com">Feedback?</a></p>
+    </p>
+    </form>
+  </div>
+</div>
+<script type="text/javascript">
+var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+</script>
+<script type="text/javascript">
+var pageTracker = _gat._getTracker("UA-4525725-1");
+pageTracker._initData();
+pageTracker._trackPageview();
+</script>
+
+</body>
+</html>
