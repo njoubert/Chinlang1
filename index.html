@@ -73,8 +73,8 @@ function increment_character() {
   current_idx = current_idxs.pop()
   current_character = characters.get(current_idx);  
   
-  $('#lesson').html(current_idx.lesson_idx + ":" + (current_idx.character_idx+1));
-  $('#charsleft').html(current_idxs.length);
+  // $('#lesson').html(current_idx.lesson_idx + ":" + (current_idx.character_idx+1));
+  // $('#charsleft').html(current_idxs.length);
 }
 
 function toggle_character_visibility(state) {
@@ -217,8 +217,8 @@ html, body, #container {
     <div id="defin">for pinyin</div>
 
   </div>
-  <div id="charsleft">Left</div>
-  <div id="lesson">Lesson</div>
+  <div id="charsleft"></div>
+  <div id="lesson"></div>
   <div id="options">
     <form>
     <p>
