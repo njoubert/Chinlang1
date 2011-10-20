@@ -13,7 +13,6 @@ var characters =
       ['yě',       '也',           'Adv',   'too; also']
     ],             
     'L2' : [       
-      //character   pinyin       type   meaning
       ['máng',     '忙',           'A',    'busy'],
       ['ma',       '吗',           'QPt',  'interrogative particle for yes-no answer'],
       ['bàba',     '爸爸',          'N',    'dad'],
@@ -62,7 +61,7 @@ var characters =
      ['péngyou',   '朋友',          'N',     'friend'],
      ['qǐngwèn',   '请问',          'V',     'May I ask...?'],
      ['wèn',       '问',           'V',     'to ask'],
-     ['quìxìng',   '贵姓',          'IE',    'what is your honorable surname?'],
+     ['guìxìng',   '贵姓',          'IE',    'what is your honorable surname?'],
      ['xìng',      '性',           'V/N',   'surname'],
      ['jiào',      '叫',           'V',     'to be called'],
      ['xiānsheng', '先生',          'N',     'Mr.'],
