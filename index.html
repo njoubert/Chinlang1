@@ -17,60 +17,61 @@
 <script type="text/javascript" src="characters.js"></script> 
 <script type="text/javascript">
 
-var use_lessons = all_lessons
+var all_lessons = characters.get_all_lessons_list();
+var use_lessons_list = characters.get_all_lessons_list();
 
-function get_random_character(lesson_array) {
-  var selected_lesson_nr = Math.floor(Math.random()*(lesson_array.length));
-  var char_array = characters[lesson_array[selected_lesson_nr]];
-  var selected_char_nr = Math.floor(Math.random()*(char_array.length));
-  return {
-    'lesson_idx': selected_lesson_nr, 
-    'character_idx': selected_char_nr
-    };
-
-}
-function get_next_character(lesson_array) {
-  new_idx = current_idx;
-  if (current_idx.lesson_idx+1 == use_lessons.length && current_idx.character_idx+1 == characters[use_lessons[current_idx.lesson_idx]].length) {
-    new_idx.lesson_idx = 0;
-    new_idx.character_idx = 0;
-  } else if (current_idx.character_idx+1 == characters[use_lessons[current_idx.lesson_idx]].length) {
-    new_idx.character_idx = 0;
-    new_idx.lesson_idx += 1;
-  } else {
-    new_idx.character_idx += 1;
-  }
-  return new_idx;
-}
-
+var current_idx = {};
+var current_character = []
+var current_idxs = [];
 function reset() {
-  current_idx = {'lesson_idx': 0, 'character_idx': -1};
-  current_character = "";
+  current_id = 0;
+  current_idxs = []
 }
 
-var current_idx = {'lesson_idx': 0, 'character_idx': -1};
-var current_character = "";
 var always_show_answer = false;
 var random_order = true;
 
 var showing_char = false;
 var showing_pinyin = false;
 
-function choose_random_character() {
-  var character = current_character
-  while (character[0] == current_character[0]) {
-    if (random_order) {
-      idx = get_random_character(use_lessons);
-    } else {
-      idx = get_next_character(use_lessons);
-    }
-    if (characters[use_lessons[idx.lesson_idx]][idx.character_idx][0] != current_character[0]) {
-      current_idx = idx;
-      current_character = characters[use_lessons[idx.lesson_idx]][idx.character_idx];
-      break;
-    }
+
+function remove_lesson(lesson) {
+  new_lessons = []
+  for (i = 0; i < use_lessons_list.length; i++) {
+    if (use_lessons_list[i] != lesson)
+      new_lessons.push(use_lessons_list[i]);
   }
-  $('#lesson').html(use_lessons[current_idx.lesson_idx] + ":" + (current_idx.character_idx+1));
+  use_lessons_list = new_lessons;
+  reset();
+}
+
+function add_lesson(lesson) {
+  use_lessons_list.push(lesson);
+  reset();
+}
+
+
+
+function create_new_index_list() {
+  var idxs = characters.get_characters_idx_array(use_lessons_list);
+  if (random_order) {
+    //shuffle here if random
+  }
+  return idxs;
+}
+
+
+//Main entry point for user's clicks.
+function increment_character() {
+  if (current_idxs.length < 1) {
+    current_idxs = create_new_index_list();
+  }
+  
+  current_idx = current_idxs.pop()
+  current_character = characters.get(current_idx);  
+  
+  $('#lesson').html(current_idx.lesson_idx + ":" + (current_idx.character_idx+1));
+  $('#charsleft').html(current_idxs.length);
 }
 
 function toggle_character_visibility(state) {
@@ -86,28 +87,13 @@ function toggle_character_visibility(state) {
 function toggle_pinyin_visibility(state) {
   if (state) {
     $('#pinyin').html(current_character[0]);
-    $('#defin').html(current_character[3]);
+    $('#defin').html(current_character[4]);
     showing_pinyin = true;
   } else {
     $('#pinyin').html("");
     $('#defin').html("");
     showing_pinyin = false;
   }
-}
-
-function remove_lesson(lesson) {
-  new_lessons = []
-  for (i = 0; i < use_lessons.length; i++) {
-    if (use_lessons[i] != lesson)
-      new_lessons.push(use_lessons[i]);
-  }
-  use_lessons = new_lessons;
-  reset();
-}
-
-function add_lesson(lesson) {
-  use_lessons.push(lesson);
-  reset();
 }
 
 $(document).ready(function() {
@@ -117,7 +103,7 @@ $(document).ready(function() {
     if (showing_pinyin && !showing_char) {
       toggle_character_visibility(true);      
     } else {
-      choose_random_character();
+      increment_character();
       toggle_character_visibility(true);
       toggle_pinyin_visibility(always_show_answer);
     }
@@ -126,7 +112,7 @@ $(document).ready(function() {
     if (showing_char && !showing_pinyin) {
       toggle_pinyin_visibility(true);      
     } else {
-      choose_random_character();
+      increment_character();
       toggle_pinyin_visibility(true);
       toggle_character_visibility(always_show_answer);
     }
@@ -147,11 +133,8 @@ $(document).ready(function() {
       random_order = false;
     }
   })  
-  
 
 });
-
-
 </script>
 
 
@@ -160,7 +143,7 @@ html, body, #container {
   width: 100%;
   height: 100%;
   margin: 0px;
-  font-family: 隶书, 黑体, Arial, Verdana, sans-serif;
+  font-family:simsun, 隶书, 黑体, Arial, Verdana, sans-serif;
 }
 #container {
     position:relative;
@@ -186,6 +169,7 @@ html, body, #container {
   background: #ddd;
 }
 #defin {
+  font-family: Helvetica, Arial, Verdana, sans-serif;
   padding-top: 8pt;
   font-size: 12pt;
   line-height: normal;
@@ -194,6 +178,8 @@ html, body, #container {
   font-size: 36pt;
 }
 #options {
+  font-family: Helvetica, Arial, Verdana, sans-serif;
+  font-size: 10pt;
   margin-top: 10px;
 }
 #options .lessonbox {
@@ -202,29 +188,40 @@ html, body, #container {
 }
 #lesson {
   font-size: 6pt;
+  float: left;
+  position: relative;
+  display:inline;
+  top: -14px;
+  left: 3px;
+  height: 1px;
+}
+#charsleft {
+  font-size: 6pt;
   float: right;
   position: relative;
-  top: -16px;
+  display:inline;
+  top: -14px;
   left: -3px;
+  height: 1px;
 }
 </style>
 </head>
 <body>
 <div id="container">
   <div id="character_container">Click</div>
-  <div id="lesson">-</div>
   <div id="pinyin_container">
     <div id="pinyin">Click</div>
     <div id="defin">for pinyin</div>
 
   </div>
-
+  <div id="charsleft">Left</div>
+  <div id="lesson">Lesson</div>
   <div id="options">
     <form>
     <p>
       <input type="checkbox" class="lessonbox" id="immediate_answer" name="immediate_answer" />Show answer immediately<br />
       <input type="checkbox" class="lessonbox" id="random_order" name="random_order" checked="true" />Show in random order<br />
-      Show characters from:<br />
+      
       <script type="text/javascript">
        for (i=0; i < all_lessons.length; i++) {
          document.write("<input class=\"lessonbox\" type=\"checkbox\" id=\"check_" + all_lessons[i] + "\" value=\"" + all_lessons[i] + "\" checked=\"true\"/>" + all_lessons[i])
