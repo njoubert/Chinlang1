@@ -1,0 +1,95 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+   "http://www.w3.org/TR/html4/loose.dtd">
+
+<html lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<title>NPCR Flashcards</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" /> 
+	<meta name="apple-mobile-web-app-capable" content="yes" /> 
+	<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+	<meta name="author" content="Niels Joubert">
+	<link rel="stylesheet" type="text/css" href="reset.css">
+	<!-- Date: 2011-10-19 -->
+	
+<script type="text/javascript" src="jquery-1.6.4.min.js"></script>
+<script type="text/javascript" src="characters.js"></script> 
+<script type="text/javascript">
+
+$(document).ready(function() {
+  window.scrollTo(0,1);
+  var lessons = characters.lessonlist;
+  for (var i = 0; i < lessons.length; i++) {
+    $("#container").append("<div id=\"lesson_"+lessons[i]+"\" class=\"lesson_container\">"+lessons[i]+"</div>");
+  
+    var chars = characters.lessons[lessons[i]].characters;
+    for (var j = 0; j < chars.length; j++) {
+      $("#lesson_"+lessons[i]).append(
+        "<div class=\"character_container\">"
+        +"<div class=\"hanxi\">"+chars[j][1]+"</div>"
+        +"<div class=\"pinyin\">"+chars[j][0]+"</div>"
+        +"</div>");
+    }
+  }
+  
+
+});
+</script>
+
+<style>
+html, body, #container {
+  width: 100%;
+  height: 100%;
+  margin: 0px;
+  font-family:simsun, 隶书, 黑体, Arial, Verdana, sans-serif;
+}
+#container {
+    position:relative;
+    width: 300px;
+    margin: 0 auto;
+}
+
+.lesson_container {
+  margin-top:10px;
+  background: #ddd;
+  
+}
+
+.character_container {
+  display: block;
+  height: 24pt;
+}
+
+.hanxi {
+  font-size: 18pt;
+  display: inline;
+  height: 20px;
+  width: 50px;
+  margin: 10px;
+}
+.pinyin {
+  font-family:Helvetica, Arial, sans-serif;  
+
+  display: inline;
+}
+
+</style>
+</head>
+<body>
+<div id="container">
+
+
+</div>
+<script type="text/javascript">
+var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+</script>
+<script type="text/javascript">
+var pageTracker = _gat._getTracker("UA-4525725-1");
+pageTracker._initData();
+pageTracker._trackPageview();
+</script>
+
+</body>
+</html>
