@@ -50,12 +50,15 @@ function add_lesson(lesson) {
   reset();
 }
 
-
+function shuffle(o) {
+  for(var j, x, i = o.length; i; j = parseInt(Math.random() * i), x = o[--i], o[i] = o[j], o[j] = x);
+  return o;
+};
 
 function create_new_index_list() {
   var idxs = characters.get_characters_idx_array(use_lessons_list);
   if (random_order) {
-    //shuffle here if random
+    shuffle(idxs);
   }
   return idxs;
 }
