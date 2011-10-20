@@ -33,12 +33,25 @@ $(document).ready(function() {
       $("#lesson_"+lessons[i]).append(
         "<div class=\"character_container"+appendclass+"\">"
         +"<span class=\"hanxi\">"+chars[j][1]+"</span>"
-        +"<span class=\"pinyin\">"+chars[j][0]+"</span>"
-        +"<span class=\"definition\">"+chars[j][4]+"</span>"
+        +"<span class=\"pinyin\"><span class=\"tablecell\">"+chars[j][0]+"</span></span>"
+        +"<span class=\"definition\"><span class=\"tablecell\">"+chars[j][4]+"</span></span>"
         +"</div>");
     }
   }
   
+  function setvisibilitybysize() {
+    if ($("#container").outerWidth() < 480) {
+      $(".definition").hide();
+    } else {
+      $(".definition").show();      
+    }    
+    
+  }
+  
+  $(window).resize(function() {
+    setvisibilitybysize();
+  });
+  setvisibilitybysize();
 
 });
 </script>
@@ -53,10 +66,23 @@ html, body {
 
 #container {
   position:relative;
-  width: 100%;
+  max-width: 480px;
+  min-width: 300px;
   margin: 0 auto;
 }
-
+#links {
+ position: absolute;
+ right: 0;
+ font-family: Helvetica, Arial, Verdana, sans-serif;
+ margin-top: 6px;
+ margin-right: 16px;
+}
+#links a:visited {
+  color: blue;
+}
+#links a {
+  color:blue;
+}
 .lesson_container {
   margin: 10px 10px 10px 10px;
   background: #ddd;
@@ -91,29 +117,34 @@ html, body {
   padding-left: 5pt;
 }
 .pinyin {
+  height: 100%;
   position: absolute;
-  bottom: 8pt;
   left: 120px;
   font-family:Helvetica, Arial, sans-serif;  
-  display: inline;
+  display: table;
 }
 .definition {
+  overflow: hidden;
   height: 100%;
-  background: #abc;
   position: absolute;
-  top: 50%;
+  display : table;
   left: 210px;
   font-family:Helvetica, Arial, sans-serif;  
   font-size: 9pt;
-  display: inline;
-  
+}
+.tablecell {
+  display: table-cell;
+  vertical-align : middle; 
+
 }
 
 </style>
 </head>
 <body>
 <div id="container">
-
+  <div id="links">
+    <a href="index.html">flashcards</a>
+  </div>
 
 </div>
 <script type="text/javascript">

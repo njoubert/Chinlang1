@@ -67,7 +67,7 @@ function CharacterDB() {
     ['māma',     '妈妈',          'N',    false, 'mom'],
     ['tāmen',    '他们',          'Pr',   false, 'they, them'],
     ['tā',       '他',           'Pr',   false, 'he, him'],
-    ['men',      '们',           'Suf',  false, 'used after pronouns or some nouns to denote plurality'],
+    ['men',      '们',           'Suf',  false, 'denotes plurality of nouns/pronouns'],
     ['dōu',      '都',           'Adv',  false, 'both; all'],
     ['bù',       '不',           'Adv',  false, 'not; no'],
     ['nán',      '男',           'A',    false, 'male'],
