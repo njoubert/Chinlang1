@@ -53,11 +53,14 @@ function CharacterDB() {
     //character  pinyin       type   , RO, meaning
     ['nǐ',       '你',           'Pr',    false, 'you'],
     ['hǎo',      '好',           'A',     false, 'good; well; fine; OK'],
+    ['Lù Yǔpíng','陆雨平',         'PN',     true, 'name of chinese reporter'],
+    ['Lìbō',     '力拨',          'PN',     true, 'name of canadian student'],
     ['ma',       '吗',           'QPt',   false, 'interrogative particle for yes-no answer'],
     ['wǒ',       '我',           'Pr',    false, 'I; me'],
     ['hěn',      '很',           'Adv',   false, 'very'],
     ['ne',       '呢',           'MdPt',  false, 'modal particle for elliptical questions'],
-    ['yě',       '也',           'Adv',   false, 'too; also']
+    ['yě',       '也',           'Adv',   false, 'too; also'],
+    ['Lín Nà',   '林娜',           'PN',   true,  'name of british student']
   ];
 
   this.lessons['L2'].characters =  [
