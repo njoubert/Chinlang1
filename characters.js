@@ -9,6 +9,7 @@ function IDX(lesson_idx, character_idx) {
 function Lesson(name) {
   this.name = name
   this.characters = [];
+  this.key_sentences = [];
   this.get_idxs = function() {
     idxs = [];
     for (var i = 0; i < this.characters.length; i++) {
@@ -20,7 +21,7 @@ function Lesson(name) {
 
 function CharacterDB() {
     
-  this.lessonlist = ['L1', 'L2', 'L3', 'L4', 'L5', 'Numbers'];
+  this.lessonlist = ['L1', 'L2', 'L3', 'L4', 'L5', 'Numbers', 'L6'];
   
   this.lessons = {
     'L1' : new Lesson('L1'),
@@ -29,6 +30,13 @@ function CharacterDB() {
     'L4' : new Lesson('L4'),
     'L5' : new Lesson('L5'),
     'Numbers' : new Lesson('Numbers'),
+    'L6' : new Lesson('L6'),
+    'L7' : new Lesson('L7'),
+    'L8' : new Lesson('L8'),
+    'L9' : new Lesson('L9'),
+    'L10' : new Lesson('L10'),
+    'L11' : new Lesson('L11'),
+    
   };
   
   this.get = function(idx) {
@@ -62,6 +70,9 @@ function CharacterDB() {
     ['yě',       '也',           'Adv',   false, 'too; also'],
     ['Lín Nà',   '林娜',           'PN',   true,  'name of british student']
   ];
+  this.lesson['L1'].key_sentences = [
+    ['pinyin here', 'characters here', 'english here']
+  ]
 
   this.lessons['L2'].characters =  [
     ['máng',     '忙',           'A',    false, 'busy'],
@@ -114,7 +125,7 @@ function CharacterDB() {
     ['qǐngwèn',   '请问',          'V',     false, 'May I ask...?'],
     ['wèn',       '问',           'V',     false, 'to ask'],
     ['guìxìng',   '贵姓',          'IE',    false, 'what is your honorable surname?'],
-    ['xìng',      '性',           'V/N',   false, 'surname'],
+    ['xìng',      '姓',           'V/N',   false, 'surname'],
     ['jiào',      '叫',           'V',     false, 'to be called'],
     ['xiānsheng', '先生',          'N',     false, 'Mr.'],
     ['yǔyán',     '语言',          'N',     false, 'language'],
@@ -167,6 +178,37 @@ function CharacterDB() {
     ['bā',        '八',           'Nu',    false, '8'],
     ['jiǔ',       '九',           'Nu',    false, '9'],
     ['shí',       '十',           'Nu',    false, '10'],
+  ];
+  
+  this.lessons['L6'].characters =  [
+    ['qù',        '去',           'V',    false, 'to go'],
+    ['yóuyǒng',   '游泳',          'VO',   true,  'to swim'],
+    ['zuótiān',   '昨天',          'N',    false, 'yesterday'],
+    ['jīngtù',    '京剧',          'N',    true,  'Beijing opera'],
+    ['zěnmeyàng', '怎么样',         'QPr',  false, 'how is it?'],
+    ['yǒu yìsi',  '有意思',         'IE',   true,  'interesting'],
+    ['jīntiān',   '今天',          'N',    false, 'today'],
+    ['tiān',      '天',           'N',    false, 'day'],
+    ['tiānqì',    '天气',          'N',    false, 'weather'],
+    ['tài',       '太',           'Adv',  false, 'too; extremely'],
+    ['shénme',    '什么',          'QPr',  false, 'what'],
+    ['shíhou',    '时候',          'N',    false, 'time; moment'],
+    ['xiànzài',   '子现在',         'N',    false, 'now'],
+    
+    ['míngtiān',  '明天',          'N',    false, 'tomorrow'],
+    ['yǒu',       '有',           'V',    false, 'to have'],
+    ['shíjiān',   '时间',          'N',    false, 'time'],
+    ['shuō',      '说',           'V',    false, 'to say; to speak'],
+    ['biàn',      '边',           'M',    false, 'number of times (of action)'],
+    ['dǎ qiú',    '打球',          'VO',   false, 'to play ball'],
+    ['dǎ',        '打',           'V',    false, 'to play'],
+    ['qiú',       '球',           'N',    false, 'ball'],
+    ['bàoqiàn',   '抱歉',          'A',    true,  'to feel sorry'],
+    ['máng',      '忙',           'A',    false, 'busy'],
+    ['kǒngpà',    '恐怕',          'Adv',  true,  'to be afraid that; perhaps'],
+    ['xíng',      '行',           'V',    false, 'to be OK'],
+    ['xièxie',    '谢谢',          'V',    false, 'to thank'],
+    ['nǐmen',     '你们',          'Pr',   false, 'you (plural)'],
   ];
     
 };
