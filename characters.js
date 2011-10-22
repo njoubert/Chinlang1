@@ -70,7 +70,7 @@ function CharacterDB() {
     ['yě',       '也',           'Adv',   false, 'too; also'],
     ['Lín Nà',   '林娜',           'PN',   true,  'name of british student']
   ];
-  this.lesson['L1'].key_sentences = [
+  this.lessons['L1'].key_sentences = [
     ['pinyin here', 'characters here', 'english here']
   ]
 
