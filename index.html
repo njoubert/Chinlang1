@@ -232,6 +232,9 @@ html, body, #container {
       <script type="text/javascript">
        for (i=0; i < all_lessons.length; i++) {
          document.write("<input class=\"lessonbox\" type=\"checkbox\" id=\"check_" + all_lessons[i] + "\" value=\"" + all_lessons[i] + "\" checked=\"true\"/>" + all_lessons[i])
+         if ((i > 0) && (i % 5 == 0)) {
+           document.write("<br />");
+         }
          $("#check_" + all_lessons[i]).click(function() {
            if ($(this).is(":checked")) {
              add_lesson(this.value);
