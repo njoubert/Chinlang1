@@ -73,6 +73,15 @@ function increment_character() {
   current_idx = current_idxs.pop()
   current_character = characters.get(current_idx);  
   
+  if (current_character[3]) {
+    $('#character_container').removeClass('writethis').addClass('recogonly');
+    $('#pinyin_container').removeClass('writethis').addClass('recogonly');
+  } else {
+    $('#character_container').removeClass('recogonly').addClass('writethis');
+    $('#pinyin_container').removeClass('recogonly').addClass('writethis');
+  }
+
+  
   // $('#lesson').html(current_idx.lesson_idx + ":" + (current_idx.character_idx+1));
   $('#charsleft').html(current_idxs.length);
 }
@@ -135,6 +144,7 @@ $(document).ready(function() {
     } else {
       random_order = false;
     }
+    reset();
   })  
 
 });
@@ -160,7 +170,6 @@ html, body, #container {
   padding-top: 12pt;
   text-align: center;
   height: 75pt;
-  background: #ddd;
   -webkit-border-radius: 10px;
   -moz-border-radius: 10px;
 }
@@ -171,7 +180,6 @@ html, body, #container {
   padding-top: 12pt;
   text-align: center;
   height: 75pt;
-  background: #ddd;
   -webkit-border-radius: 10px;
   -moz-border-radius: 10px;
 }
@@ -211,12 +219,18 @@ html, body, #container {
   left: -6px;
   height: 1px;
 }
+.recogonly {
+  background: #ccccee;
+}
+.writethis {
+  background: #ddd;
+}
 </style>
 </head>
 <body>
 <div id="container">
-  <div id="character_container">Press</div>
-  <div id="pinyin_container">
+  <div id="character_container" class="writethis">Press</div>
+  <div id="pinyin_container" class="writethis">
     <div id="pinyin">Press</div>
     <div id="defin">for pinyin</div>
 
