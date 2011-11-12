@@ -1,0 +1,1 @@
+= Chinese 1, Stanford
